@@ -1,6 +1,6 @@
 name: verthash-one-click-miner
 version: 2.1.5
-summary:   Open Source Vertcoin One-Click Miner and Dogecoin wallet. Receive payouts in DOGE and more.
+summary:   Open Source Vertcoin One-Click Miner and Dogecoin wallet.
 description: |
   This program will create a Dogecoin wallet that only you have access to. 
   Encrypt your wallet with a password that you will not forget. It will then 
