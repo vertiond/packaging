@@ -1,55 +1,44 @@
-name: vertcoin-core
-version: 0.18.0
-summary:   peer-to-peer network based digital currency
+name: verthash-one-click-miner
+version: 2.1.5
+summary:   Open Source Vertcoin One-Click Miner and Dogecoin wallet. Receive payouts in DOGE and more.
 description: |
-  Vertcoin is a free open source peer-to-peer electronic cash system that
-  is completely decentralized, without the need for a central server or
-  trusted parties.  Users hold the crypto keys to their own money and
-  transact directly with each other, with the help of a P2P network to
-  check for double-spending.
+  This program will create a Dogecoin wallet that only you have access to. 
+  Encrypt your wallet with a password that you will not forget. It will then 
+  create the Verthash datafile and immediately begin mining Vertcoin. You will 
+  receive payouts in Dogecoin to your built-in Dogecoin wallet from the pool 
+  selected in Settings. 
+  Additional payout currencies via Zergpool and zpool are available in Settings.
 
 grade: stable
 confinement: strict
 
 apps:
-  daemon:
-    command: vertcoind
-    plugs: [home, removable-media, network, network-bind]
+  ocm:
+    command: desktop-launch verthash-ocm
+    plugs: [home, network, network-bind, desktop, x11, unity7]
     environment:
       # Override HOME so the datadir is located at
-      # ~/snap/vertcoin-core/common/.vertcoin/ instead of
-      # ~/snap/vertcoin-core/current/.vertcoin/, and each new version of the
+      # ~/snap/verthash-one-click-miner/common/.verthash-ocm/ instead of
+      # ~/snap/verthash-one-click-miner/current/.verthash-ocm/, and each new version of the
       # snap won't have a different data directory:
       # https://docs.snapcraft.io/environment-variables/7983
       HOME: $SNAP_USER_COMMON
-  qt:
-    command: desktop-launch vertcoin-qt
-    plugs: [home, removable-media, network, network-bind, desktop, x11, unity7]
-    environment:
-      HOME: $SNAP_USER_COMMON
       DISABLE_WAYLAND: 1
-  cli:
-    command: vertcoin-cli
-    plugs: [home, removable-media, network]
-    environment:
-      HOME: $SNAP_USER_COMMON
 
 parts:
-  bitcoin-core:
+  verthash-one-click-miner:
     plugin: nil
     override-build: | 
       env | grep SNAP
-      wget https://raw.githubusercontent.com/vertcoin-project/guix.sigs/main/${SNAPCRAFT_PROJECT_VERSION}/vertion/all.SHA256SUMS
-      wget https://github.com/vertcoin-project/vertcoin-core/releases/download/${SNAPCRAFT_PROJECT_VERSION}/vertcoin-${SNAPCRAFT_PROJECT_VERSION}-${SNAPCRAFT_ARCH_TRIPLET}.tar.gz
-      echo "e89ac4bbec19b4ac0877259475f3f88f7110495b1247acb00986543782586faa  all.SHA256SUMS" | sha256sum --check
-      sha256sum --ignore-missing --check all.SHA256SUMS
-      tar -xvf vertcoin-${SNAPCRAFT_PROJECT_VERSION}-${SNAPCRAFT_ARCH_TRIPLET}.tar.gz
-      install -m 0755 -D -t $SNAPCRAFT_PART_INSTALL/bin vertcoin-${SNAPCRAFT_PROJECT_VERSION}/bin/vertcoind
-      install -m 0755 -D -t $SNAPCRAFT_PART_INSTALL/bin vertcoin-${SNAPCRAFT_PROJECT_VERSION}/bin/vertcoin-qt
-      install -m 0755 -D -t $SNAPCRAFT_PART_INSTALL/bin vertcoin-${SNAPCRAFT_PROJECT_VERSION}/bin/vertcoin-cli
-      wget https://raw.githubusercontent.com/vertcoin-project/vertcoin-core/${SNAPCRAFT_PROJECT_VERSION}/share/pixmaps/vertcoin128.png
+      wget https://github.com/vertiond/verthash-one-click-miner/releases/download/${SNAPCRAFT_PROJECT_VERSION}/manifest-${SNAPCRAFT_PROJECT_VERSION}.txt
+      wget https://github.com/vertiond/verthash-one-click-miner/releases/download/${SNAPCRAFT_PROJECT_VERSION}/verthash-ocm-${SNAPCRAFT_PROJECT_VERSION}-linux-x64.zip
+      echo "1c01782d8cc597ef26dbcd996ae8dd701aa4cf5b995a7465f2f691294a057d6d  manifest-${SNAPCRAFT_PROJECT_VERSION}.txt" | sha256sum --check
+      sha256sum --ignore-missing --check manifest-${SNAPCRAFT_PROJECT_VERSION}.txt
+      unzip verthash-ocm-${SNAPCRAFT_PROJECT_VERSION}-linux-x64.zip
+      install -m 0755 -D -t $SNAPCRAFT_PART_INSTALL/bin verthash-one-click-miner-${SNAPCRAFT_PROJECT_VERSION}/bin/verthash-ocm
+      wget https://raw.githubusercontent.com/vertcoin-project/vertcoin-core/master/share/pixmaps/vertcoin128.png
       install -m 0644 -D -t $SNAPCRAFT_PART_INSTALL/share/pixmaps vertcoin128.png
     build-packages:
-      - wget
+      - wget zip
     after:
-      - desktop-qt5
+      - desktop-gtk3
