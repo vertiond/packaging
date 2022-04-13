@@ -35,7 +35,7 @@ parts:
       echo "1c01782d8cc597ef26dbcd996ae8dd701aa4cf5b995a7465f2f691294a057d6d  manifest-${SNAPCRAFT_PROJECT_VERSION}.txt" | sha256sum --check
       sha256sum --ignore-missing --check manifest-${SNAPCRAFT_PROJECT_VERSION}.txt
       unzip verthash-ocm-${SNAPCRAFT_PROJECT_VERSION}-linux-x64.zip
-      install -m 0755 -D -t $SNAPCRAFT_PART_INSTALL/bin verthash-one-click-miner-${SNAPCRAFT_PROJECT_VERSION}/bin/verthash-ocm
+      install -m 0755 -D -t $SNAPCRAFT_PART_INSTALL/bin verthash-ocm
       wget https://raw.githubusercontent.com/vertcoin-project/vertcoin-core/master/share/pixmaps/vertcoin128.png
       install -m 0644 -D -t $SNAPCRAFT_PART_INSTALL/share/pixmaps vertcoin128.png
     build-packages:
