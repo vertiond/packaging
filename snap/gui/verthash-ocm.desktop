@@ -1,0 +1,11 @@
+[Desktop Entry]
+Version=1.0
+Name=Verthash One-Click Miner
+Comment=Mine using your computer
+Exec=verthash-one-click-miner.ocm %u
+Terminal=false
+Type=Application
+Icon=${SNAP}/share/pixmaps/vertcoin128.png
+MimeType=x-scheme-handler/verthash;
+Categories=Finance;Utilities;
+StartupWMClass=Verthash-ocm

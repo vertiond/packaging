@@ -15,7 +15,7 @@ confinement: strict
 apps:
   ocm:
     command: desktop-launch verthash-ocm
-    plugs: [home, network, network-bind, desktop, x11, unity7]
+    plugs: [home, network, desktop, x11, unity7]
     environment:
       # Override HOME so the datadir is located at
       # ~/snap/verthash-one-click-miner/common/.verthash-ocm/ instead of
